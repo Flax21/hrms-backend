@@ -41,7 +41,14 @@ export class LeavesService {
       relations: { Employee: true },
     });
   }
-
+// READ MY LEAVE REQUESTS
+async findMyLeaves(employeeID: number) {
+  return await this.leaveRepository.find({
+    where: { EmployeeID: employeeID },
+    relations: { Employee: true },
+    order: { StartDate: 'DESC' },
+  });
+}
   // READ ONE
   async findOne(id: number) {
     const leave = await this.leaveRepository.findOne({

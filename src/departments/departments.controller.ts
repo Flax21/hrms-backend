@@ -12,12 +12,15 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
+import { Roles } from '../auth/roles.decorator';
+import { RolesGuard } from '../auth/roles.guard';
 import { DepartmentsService } from './departments.service';
 import { Department } from './department.entity';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 @Controller('api/v1/departments')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('Admin')
 export class DepartmentsController {
   constructor(
     private readonly departmentsService: DepartmentsService,

@@ -12,15 +12,16 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-
+import { Roles } from '../auth/roles.decorator';
+import { RolesGuard } from '../auth/roles.guard';
 import { EmployeesService } from './employees.service';
 import { Employee } from './employee.entity';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('api/v1/employees')
-
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('Admin')
 export class EmployeesController {
   constructor(
     private readonly employeesService: EmployeesService,

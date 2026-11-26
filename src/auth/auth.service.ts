@@ -94,9 +94,11 @@ if (!employee) {
     Password: string;
   }) {
     const user = await this.userRepository.findOne({
-      where: { Username: data.Username },
-    });
-
+  where: { Username: data.Username },
+  relations: {
+    Employee: true,
+  },
+});
     if (!user) {
       throw new UnauthorizedException('Invalid username or password');
     }
@@ -111,10 +113,11 @@ if (!employee) {
     }
 
     const payload = {
-      sub: user.UserID,
-      username: user.Username,
-      role: user.Role,
-    };
+  sub: user.UserID,
+  username: user.Username,
+  role: user.Role,
+  EmployeeID: user.Employee?.EmployeeID ?? null,
+};
 
     return {
       message: 'Login successful',
@@ -127,4 +130,52 @@ if (!employee) {
       },
     };
   }
+  
+  async findAllUsers() {
+  const users = await this.userRepository.find({
+    relations: {
+      Employee: true,
+    },
+    select: {
+      UserID: true,
+      Username: true,
+      Email: true,
+      Role: true,
+      Employee: {
+        EmployeeID: true,
+        FirstName: true,
+        LastName: true,
+      },
+    },
+  });
+
+  return users;
+}
+
+
+async getProfile(user: {
+  UserID: number;
+  Username: string;
+  Role: string;
+  EmployeeID: number | null;
+}) {
+  let employee = null;
+
+  if (user.EmployeeID) {
+    employee = await this.employeeRepository.findOne({
+      where: { EmployeeID: user.EmployeeID },
+      relations: {
+        Department: true,
+      },
+    });
+  }
+
+  return {
+    user: {
+      ...user,
+      Employee: employee,
+    },
+  };
+}
+
 }

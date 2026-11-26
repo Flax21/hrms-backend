@@ -41,7 +41,14 @@ export class AttendanceService {
       relations: { Employee: true },
     });
   }
-
+// READ MY ATTENDANCE
+async findMyAttendance(employeeID: number) {
+  return await this.attendanceRepository.find({
+    where: { EmployeeID: employeeID },
+    relations: { Employee: true },
+    order: { AttendanceDate: 'DESC' },
+  });
+}
   // READ ONE
   async findOne(id: number) {
     const attendance = await this.attendanceRepository.findOne({
