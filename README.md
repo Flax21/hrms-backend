@@ -1,70 +1,111 @@
 # HRMS Backend System
 
-## Project Description
+## 1. Project Description
 
-The Human Resource Management System (HRMS) Backend is a REST API developed for managing basic human resource operations. It uses NestJS, TypeORM, and MySQL to provide organized and secure data management.
+The Human Resource Management System (HRMS) Backend is a RESTful API developed to support basic human resource operations. It provides secure and organized management of employee information, departments, attendance records, and leave requests.
 
-## Technologies Used
+The backend is developed using NestJS, TypeORM, and MySQL. It also implements JWT authentication and role-based authorization to control access to protected resources.
+
+## 2. Technologies Used
 
 - NestJS
 - TypeScript
 - TypeORM
 - MySQL
 - XAMPP
-- JWT Authentication
+- JSON Web Token (JWT)
+- bcrypt
+- class-validator
 - Postman
 
-## System Modules
+## 3. System Modules
 
-1. **Authentication** – Handles user registration, login, password hashing, and JWT authentication.
-2. **Department Management** – Manages department records.
-3. **Employee Management** – Manages employee information.
-4. **Attendance Management** – Manages employee attendance records.
-5. **Leave Management** – Manages employee leave requests.
+1. **Authentication Module** – Handles user registration, login, password hashing, JWT generation, and user profile retrieval.
+2. **Department Management** – Provides CRUD operations for managing department records.
+3. **Employee Management** – Manages employee information and department relationships.
+4. **Attendance Management** – Handles employee attendance records and employee-specific attendance retrieval.
+5. **Leave Management** – Manages employee leave requests, including submission and approval or rejection.
 
-## Project Setup
+## 4. Project Requirements
 
-### Requirements
+Before installing the project, make sure you have the following:
 
-- Node.js and npm
+- Node.js
+- npm
 - XAMPP
 - MySQL
+- Visual Studio Code or another code editor
 - Postman
 
-### Installation
+## 5. Project Installation and Setup
 
-1. Clone or download this repository.
-2. Open the project folder in VS Code.
-3. Open the terminal and install the dependencies:
+### Step 1: Clone the Repository
+
+Clone the repository using Git:
+
+```bash
+git clone https://github.com/Flax21/hrms-backend.git
+```
+
+Open the project folder:
+
+```bash
+cd hrms-backend
+```
+
+### Step 2: Install Dependencies
+
+Run the following command:
 
 ```bash
 npm install
 ```
 
-4. Start MySQL using XAMPP.
+### Step 3: Configure MySQL
+
+1. Open XAMPP Control Panel.
+2. Start Apache (if needed for phpMyAdmin).
+3. Start MySQL.
+4. Open phpMyAdmin.
 5. Create a database named `hrms_db`.
-6. Import the provided SQL database file.
-7. Configure your database credentials and JWT environment variables in `.env`.
+6. Import the provided HRMS SQL database export.
 
-## Running the Project
+### Step 4: Configure Environment Variables
 
-```bash
-# Development mode
-npm run start:dev
+Create a `.env` file in the root directory of the project.
 
-# Production mode
-npm run start:prod
+Configure the database credentials and JWT settings according to the environment configuration in `src/app.module.ts` and the authentication module.
+
+Example JWT settings:
+
+```env
+JWT_SECRET=your_secure_secret_key
+JWT_EXPIRES_IN=1d
 ```
 
-The backend runs at:
+Do not upload your actual `.env` file or secret credentials to GitHub.
+
+### Step 5: Run the Backend
+
+Start the development server:
+
+```bash
+npm run start:dev
+```
+
+The backend server runs at:
 
 `http://localhost:3000`
 
-## API Base URL
+## 6. API Configuration
+
+**API Base URL:**
 
 `http://localhost:3000/api/v1`
 
-## API Endpoints
+The API uses RESTful endpoints to communicate with the frontend and manage system data.
+
+## 7. API Modules and Endpoints
 
 | Module | Base Endpoint |
 |---|---|
@@ -74,24 +115,4 @@ The backend runs at:
 | Attendance | `/attendance` |
 | Leaves | `/leaves` |
 
-Each CRUD module supports creating, retrieving, updating, and deleting records.
-
-## Authentication and Security
-
-The system uses JSON Web Tokens (JWT) to protect authorized endpoints. Passwords are hashed using bcrypt before being stored in the database. Input validation is implemented using class-validator and NestJS ValidationPipe.
-
-## API Testing
-
-Postman is used to test API requests, responses, CRUD operations, and authentication.
-
-## Database
-
-The system uses MySQL as its database and TypeORM for database operations and entity relationships.
-
-## Project Information
-
-**Subject:** ITEC 116 – Systems Integration
-
-**Project:** Final Project – Systems Integration Backend Prototype
-
-**System:** Human Resource Management System (HRMS) Backend
+The CRUD modules support the following HTTP methods
